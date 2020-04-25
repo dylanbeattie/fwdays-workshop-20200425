@@ -8,6 +8,10 @@ namespace GrpcGreeterClient {
 	class Program {
 		private static Stopwatch sw = new Stopwatch();
 		static async Task Main(string[] args) {
+
+			// This is required 
+			AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+
 			string host;
 			try {
 				host = new Uri(args[0]).ToString();
