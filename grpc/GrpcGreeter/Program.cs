@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace GrpcGreeter {
 	public class Program {
@@ -18,6 +19,10 @@ namespace GrpcGreeter {
 		// For instructions on how to configure Kestrel and gRPC clients on macOS, visit https://go.microsoft.com/fwlink/?linkid=2099682
 		public static IHostBuilder CreateHostBuilder(string[] args) =>
 			Host.CreateDefaultBuilder(args)
+				.ConfigureLogging(logging => {
+					logging.ClearProviders();
+					logging.AddConsole();
+				})
 				.ConfigureWebHostDefaults(webBuilder => {
 					webBuilder.ConfigureKestrel(options => {
 						// Setup a HTTP/2 endpoint without TLS.
@@ -31,7 +36,7 @@ namespace GrpcGreeter {
 	public static class KestrelServerExtensions {
 		public static void UseSslIfFileExists(this KestrelServerOptions options, int port, string pfxFilePath, string password = null) {
 			if (File.Exists(pfxFilePath)) {
-				options.Listen(IPAddress.Any, port, listen => listen.UseHttps(pfxFilePath, password));							
+				options.Listen(IPAddress.Any, port, listen => listen.UseHttps(pfxFilePath, password));
 			}
 		}
 	}

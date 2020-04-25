@@ -3,9 +3,11 @@ using System.Threading.Tasks;
 using GrpcGreeter;
 using Grpc.Net.Client;
 using System.Diagnostics;
+using System.Linq;
 
 namespace GrpcGreeterClient {
 	class Program {
+		private static readonly string[] bailouts = new[] { "quit", "exit", "bye", "q" };
 		private static Stopwatch sw = new Stopwatch();
 		static async Task Main(string[] args) {
 
@@ -28,7 +30,10 @@ namespace GrpcGreeterClient {
 					sw.Reset();
 					Console.WriteLine(String.Empty.PadLeft(72, '='));
 					Console.Write("Enter your name: ");
+					
 					var name = Console.ReadLine();
+					if (bailouts.Contains(name)) return;
+
 					sw.Start();
 					request = new HelloRequest { Name = name };
 					reply = await client.SayHelloAsync(request);
