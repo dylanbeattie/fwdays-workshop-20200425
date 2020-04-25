@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+message GreetingRequest {
+  string name = 1;
+  string language = 2;
+  enum GreetingType {
+    FRIENDLY = 0;
+    FORMAL = 1;
+    CASUAL = 2;
+    HOSTILE = 3;
+  }
+}
