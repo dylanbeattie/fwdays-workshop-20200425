@@ -12,7 +12,7 @@ namespace GrpcGreeterClient {
 				var client = new Greeter.GreeterClient(channel);
 				while (true) {
 					sw.Reset();
-					Console.Write(String.Empty.PadLeft(72, '='));
+					Console.WriteLine(String.Empty.PadLeft(72, '='));
 					Console.Write("Enter your name: ");
 					var name = Console.ReadLine();
 					sw.Start();
